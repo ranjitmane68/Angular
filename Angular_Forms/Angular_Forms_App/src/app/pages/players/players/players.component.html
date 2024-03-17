@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="m-5 bg-info">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="find flayers by name"
+      #filter
+      (keyup)="update(filter.value)"
+    />
+    <button
+      class="btn btn-light"
+      type="button"
+      (click)="update(''); filter.value = ''"
+      title="update players list"
+    ></button>
+  </div>
+
+  <ul *ngIf="players$ | async as players; else loading" class="my-4">
+    <li *ngFor="let player of players">
+      <a [routerLink]="['/routePath']" routerLinkActive="router-link-active">{{
+        player.name
+      }}</a>
+    </li>
+  </ul>
+
+  <ng-template #loading>
+    <p class="my-4">Loading&hellip;</p>
+  </ng-template>
+</div>
