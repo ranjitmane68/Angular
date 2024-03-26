@@ -4,11 +4,12 @@ import { IPlayer } from '../../../interfaces/player';
 import { ApiService } from '../../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { OnlineStatusDirective } from '../../../directives/online-status/online-status.directive';
 
 @Component({
   selector: 'app-players',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [OnlineStatusDirective, CommonModule, RouterModule],
   templateUrl: './players.component.html',
   styleUrl: './players.component.scss',
 })

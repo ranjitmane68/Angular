@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" formControlName="username" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="name">Email</label>
+          <input type="email" formControlName="email" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="name">Age</label>
+          <input type="number" formControlName="age" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

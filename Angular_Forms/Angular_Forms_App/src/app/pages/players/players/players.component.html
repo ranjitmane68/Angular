@@ -16,7 +16,7 @@
   </div>
 
   <ul *ngIf="players$ | async as players; else loading" class="my-4">
-    <li *ngFor="let player of players">
+    <li *ngFor="let player of players" [appOnlineStatus]="player.online">
       <a [routerLink]="['/routePath']" routerLinkActive="router-link-active">{{
         player.name
       }}</a>

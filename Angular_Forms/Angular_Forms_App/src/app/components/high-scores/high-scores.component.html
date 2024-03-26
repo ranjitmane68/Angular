@@ -1,0 +1,16 @@
+<h2 class="my-4">High Scores</h2>
+
+<ul *ngIf="players$ | async as players; else loading" class="m-4">
+  <li *ngFor="let player of players | sortByScore | slice : 0 : 5">
+    <a
+      [routerLink]="['/profile', player.id]"
+      routerLinkActive="router-link-active"
+      >{{ player.name }}</a
+    >
+    <span class="m-5">{{ player.score | percent : "1.1-1" }}</span>
+  </li>
+</ul>
+
+<ng-template #loading>
+  <p class="m-5">Loading high scores</p>
+</ng-template>

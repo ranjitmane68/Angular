@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <!-- to get access to this template form use local reference variable -->
+  <form (ngSubmit)="onSubmit(userform)" #userform="ngForm">
+    <div class="form-group">
+      <label for="username">User Name</label>
+      <input type="text" name="username" class="form-control" ngModel />
+    </div>
+
+    <div class="form-group">
+      <label for="username">Age</label>
+      <input type="number" name="age" class="form-control" ngModel />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        class="form-control"
+        [ngModel]="this.userEmail"
+        email
+        #email="ngModel"
+        required
+      />
+      <span *ngIf="!email.valid && email.touched">Email is invalid</span>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>

@@ -1,0 +1,22 @@
+<p>Hero component</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col" *ngIf="this.hero; else heroNotFound">
+      <p>{{ hero.name }}</p>
+      <p>{{ hero.skill }}</p>
+      <p>{{ hero.isActive }}</p>
+      <button
+        class="btn btn-lg btn-primary"
+        title="clickHero"
+        name="clickHero"
+        type="button"
+        (click)="clickHero()"
+      >
+        Click Hero
+      </button>
+    </div>
+  </div>
+  <ng-template #heroNotFound>
+    <p>Hero Not Found</p>
+  </ng-template>
+</div>
