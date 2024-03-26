@@ -6,6 +6,7 @@ import { HeroComponent } from './component-communication/hero/hero.component';
 import { HeroParentComponent } from './component-communication/hero-parent/hero-parent.component';
 import { TestUserTemplateFormComponent } from './forms/test-user-template-form/test-user-template-form.component';
 import { TestReactiveUserFormsComponent } from './forms/test-reactive-user-forms/test-reactive-user-forms.component';
+import { ShoppingListFormComponent } from './forms/shopping-list-form/shopping-list-form.component';
 
 export const routes: Routes = [
   {
@@ -35,5 +36,9 @@ export const routes: Routes = [
   {
     path: 'user-reactive-form',
     component: TestReactiveUserFormsComponent,
+  },
+  {
+    path: 'shopping-list',
+    component: ShoppingListFormComponent,
   },
 ];
