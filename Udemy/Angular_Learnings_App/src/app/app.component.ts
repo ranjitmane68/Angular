@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
 import { Post } from './models/post.models';
 import { CommonModule } from '@angular/common';
+import { PostsService } from './services/posts.service';
 
 @Component({
   selector: 'app-root',
@@ -12,58 +13,32 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, FormsModule, HttpClientModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  providers: [PostsService],
 })
 export class AppComponent {
   title = 'Angular_Learnings_App';
   isFetching = false;
   loadedPosts: Post[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private postService: PostsService) {}
 
   ngOnInit() {
-    this.fetchPosts();
+    this.postService.fetchPosts().subscribe((posts) => {
+      this.isFetching = false;
+      this.loadedPosts = posts;
+    });
   }
 
   onCreatePost(postData: { title: string; content: string }) {
-    // Send Http request
-    // Angular HTTP Client automatically converts javascript object to JSON object
-    console.log(postData);
-    this.http
-      .post(
-        'https://ng-complete-guide-d4d7d-default-rtdb.firebaseio.com/posts.json',
-        postData
-      )
-      .subscribe((responseData) => {
-        console.log(responseData);
-      });
+    this.postService.createAndStorePost(postData.title, postData.content);
   }
 
   onFetchPosts() {
-    this.fetchPosts();
-  }
-
-  private fetchPosts() {
     this.isFetching = true;
-    this.http
-      .get<{ [key: string]: Post }>(
-        'https://ng-complete-guide-d4d7d-default-rtdb.firebaseio.com/posts.json'
-      )
-      .pipe(
-        map((responseData: { [key: string]: Post }) => {
-          const postArray: Post[] = [];
-          for (const key in responseData) {
-            if (responseData.hasOwnProperty(key)) {
-              postArray.push({ ...responseData[key], id: key });
-            }
-          }
-          return postArray;
-        })
-      )
-      .subscribe((posts) => {
-        console.log(posts);
-        this.loadedPosts = posts;
-        this.isFetching = false;
-      });
+    this.postService.fetchPosts().subscribe((posts) => {
+      this.isFetching = false;
+      this.loadedPosts = posts;
+    });
   }
 
   onClearPosts() {
