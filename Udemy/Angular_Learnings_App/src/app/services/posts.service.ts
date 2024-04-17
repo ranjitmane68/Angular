@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Post } from '../models/post.models';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -39,5 +39,11 @@ export class PostsService {
           return postArray;
         })
       );
+  }
+
+  deletePosts(): any {
+    return this.http.delete(
+      'https://ng-complete-guide-d4d7d-default-rtdb.firebaseio.com/posts.json'
+    );
   }
 }

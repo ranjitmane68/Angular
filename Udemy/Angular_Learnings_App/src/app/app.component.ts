@@ -42,6 +42,9 @@ export class AppComponent {
   }
 
   onClearPosts() {
-    // Send Http request
+    this.postService.deletePosts().subscribe((result: any) => {
+      this.loadedPosts = [];
+      console.log('Delete is completed', result);
+    });
   }
 }
