@@ -3,18 +3,20 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
+import { Post } from './models/post.models';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, RouterOutlet],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'Angular_Learnings_App';
-
-  loadedPosts = [];
+  isFetching = false;
+  loadedPosts: Post[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -41,13 +43,14 @@ export class AppComponent {
   }
 
   private fetchPosts() {
+    this.isFetching = true;
     this.http
-      .get<[]>(
+      .get<{ [key: string]: Post }>(
         'https://ng-complete-guide-d4d7d-default-rtdb.firebaseio.com/posts.json'
       )
       .pipe(
-        map((responseData: any[]) => {
-          const postArray = [];
+        map((responseData: { [key: string]: Post }) => {
+          const postArray: Post[] = [];
           for (const key in responseData) {
             if (responseData.hasOwnProperty(key)) {
               postArray.push({ ...responseData[key], id: key });
@@ -56,7 +59,11 @@ export class AppComponent {
           return postArray;
         })
       )
-      .subscribe((posts) => console.log(posts));
+      .subscribe((posts) => {
+        console.log(posts);
+        this.loadedPosts = posts;
+        this.isFetching = false;
+      });
   }
 
   onClearPosts() {
