@@ -9,10 +9,10 @@ import { increment } from '../store/counter.actions';
   standalone: true,
 })
 export class CounterControlsComponent {
-  constructor(private store: Store) {}
+  constructor(private readonly store: Store) {}
 
   increment() {
-    this.store.dispatch(increment());
+    this.store.dispatch(increment({value: 5}));
   }
 
   decrement() {
